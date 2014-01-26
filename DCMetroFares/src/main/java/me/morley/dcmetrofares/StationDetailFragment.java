@@ -14,11 +14,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-
-import java.util.Arrays;
-
-import me.morley.dcmetrofares.metro.*;
 
 /**
  * A fragment representing a single Station detail screen.
@@ -37,6 +32,10 @@ public class StationDetailFragment extends Fragment
     SimpleCursorAdapter detailAdapter;
     SimpleCursorAdapter linesAdapter;
     SimpleCursorAdapter routesAdapter;
+
+    public static final int DETAIL_LOADER = 1;
+    public static final int LINES_LOADER = 2;
+    public static final int ROUTES_LOADER = 3;
 
     /**
      * The dummy content this fragment is presenting.
@@ -86,9 +85,9 @@ public class StationDetailFragment extends Fragment
             Bundle bundle = new Bundle();
             bundle.putString("slug", getArguments().getString(ARG_ITEM_ID));
 
-            getLoaderManager().initLoader(1, bundle, this);
-            getLoaderManager().initLoader(2, bundle, this);
-            getLoaderManager().initLoader(3, bundle, this);
+            getLoaderManager().initLoader(DETAIL_LOADER, bundle, this);
+            getLoaderManager().initLoader(LINES_LOADER, bundle, this);
+            getLoaderManager().initLoader(ROUTES_LOADER, bundle, this);
         }
     }
 
@@ -109,23 +108,23 @@ public class StationDetailFragment extends Fragment
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String slug = bundle.getString("slug");
         switch(i) {
-            case 1:
+            case DETAIL_LOADER:
                 return new CursorLoader(this.getActivity(),
                         Uri.parse("content://me.morley.dcmetrofares.MetroDBProvider/stations/" + slug),
                         new String[] {"_id", "wp_name", "latitude", "longitude", "parking"},
                         null,
                         null,
                         null);
-            case 2:
+            case LINES_LOADER:
                 return new CursorLoader(this.getActivity(),
-                        Uri.parse("content://me.morley.dcmetrofares.MetroDBProvider/routes/" + slug),
+                        Uri.parse("content://me.morley.dcmetrofares.MetroDBProvider/lines/" + slug),
                         null,
                         null,
                         null,
                         null);
-            case 3:
+            case ROUTES_LOADER:
                 return new CursorLoader(this.getActivity(),
-                        Uri.parse("content://me.morley.dcmetrofares.MetroDBProvider/lines/" + slug),
+                        Uri.parse("content://me.morley.dcmetrofares.MetroDBProvider/routes/" + slug),
                         null,
                         null,
                         null,
@@ -141,18 +140,18 @@ public class StationDetailFragment extends Fragment
         // Swap the new cursor in.  (The framework will take care of closing the
         // old cursor once we return.)
         switch(cursorLoader.getId()) {
-            case 1:
+            case DETAIL_LOADER:
                 detailAdapter.swapCursor(cursor);
                 detailAdapter.bindView(getView(),getActivity(),cursor);
                 break;
-            case 2:
-                routesAdapter.swapCursor(cursor);
-                routesAdapter.bindView(getView(),getActivity(),cursor);
-                break;
-            case 3:
+            case LINES_LOADER:
                 linesAdapter.swapCursor(cursor);
                 Log.d("LoadFinished", "Count: " + cursor.getCount());
                 linesAdapter.bindView(getView(),getActivity(),cursor);
+                break;
+            case ROUTES_LOADER:
+                routesAdapter.swapCursor(cursor);
+                routesAdapter.bindView(getView(),getActivity(),cursor);
                 break;
         }
 
@@ -164,14 +163,14 @@ public class StationDetailFragment extends Fragment
         // above is about to be closed.  We need to make sure we are no
         // longer using it.
         switch(cursorLoader.getId()) {
-            case 1:
+            case DETAIL_LOADER:
                 detailAdapter.swapCursor(null);
                 break;
-            case 2:
-                routesAdapter.swapCursor(null);
-                break;
-            case 3:
+            case LINES_LOADER:
                 linesAdapter.swapCursor(null);
+                break;
+            case ROUTES_LOADER:
+                routesAdapter.swapCursor(null);
                 break;
         }
     }

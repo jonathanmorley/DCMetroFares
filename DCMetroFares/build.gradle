@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.+'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.0'
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 19
+    }
+}
+
+dependencies {
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    compile 'com.android.support:gridlayout-v7:19.0.0'
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:support-v4:18.0.0'
+}

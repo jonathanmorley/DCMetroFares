@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_column="0"
+    tools:context=".StationDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/metro_brown">
+
+        <me.morley.dcmetrofares.HelveticaTextView
+            android:id="@+id/station_detail_name"
+            android:layout_width="wrap_content"
+            android:textSize="30sp"
+
+            tools:text="[Station Name]"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
+
+        <me.morley.dcmetrofares.HelveticaTextView
+            android:id="@+id/station_detail_subtitle"
+            android:layout_width="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:context=".StationDetailFragment"
+            tools:text="[Station Subtitle]"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"/>
+
+            <GridView
+                android:id="@+id/lines_grid"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"/>
+    </LinearLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/routes_list" />
+</LinearLayout>
+
+
+
+
+

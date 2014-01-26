@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DC Metro Fares</string>
+    <string name="title_station_detail">Routes from </string>
+    <color name="metro_brown">#524F26</color>
+
+</resources>
